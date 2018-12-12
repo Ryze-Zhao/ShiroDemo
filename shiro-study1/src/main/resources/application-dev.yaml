@@ -1,0 +1,20 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/shiro?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: mysql123
+    #使用com.mysql.jdbc.Driver也行，但是会报WARN
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+  #是否在log显示sql语句
+    show-sql: true
+    #自动数据库
+    database: mysql
+    #自动生成表和自动更新字段
+    hibernate:
+      ddl-auto: update
