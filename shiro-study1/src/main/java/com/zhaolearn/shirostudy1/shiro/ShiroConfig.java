@@ -34,6 +34,7 @@ public class ShiroConfig {
         //但是我们仍需要login和test页面，所以要放行，这个是controller路径
         filterMap.put("/study1/test", "anon");
         filterMap.put("/study1/login", "anon");
+        filterMap.put("/study1/loginUser", "anon");
         //一个目录下可以使用这个，这个是controller路径
         filterMap.put("/study1/*", "authc");
 
