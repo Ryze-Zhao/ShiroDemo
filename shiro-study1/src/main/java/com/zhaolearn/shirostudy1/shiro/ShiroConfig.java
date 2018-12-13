@@ -1,7 +1,9 @@
 package com.zhaolearn.shirostudy1.shiro;
 
+import com.zhaolearn.shirostudy1.service.UserService;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +13,7 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
+
     //创建ShiroFilterFactoryBean
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(

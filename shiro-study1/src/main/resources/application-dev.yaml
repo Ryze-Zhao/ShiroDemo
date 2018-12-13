@@ -10,11 +10,6 @@ spring:
     password: mysql123
     #使用com.mysql.jdbc.Driver也行，但是会报WARN
     driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-  #是否在log显示sql语句
-    show-sql: true
-    #自动数据库
-    database: mysql
-    #自动生成表和自动更新字段
-    hibernate:
-      ddl-auto: update
+mybatis:
+  type-aliases-package: com.zhaolearn.shirostudy1.domain
+  mapper-locations: classpath:/mapper/*.xml
