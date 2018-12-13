@@ -41,7 +41,7 @@ public class ShiroDemo2ApplicationTests {
         }
         //尝试进行登录用户，如果登录失败了，我们进行一些处理
         if (!currentUser.isAuthenticated()) { //如果用户没有登录过
-            UsernamePasswordToken token = new UsernamePasswordToken("test", "123456");
+            UsernamePasswordToken token = new UsernamePasswordToken("user", "123456");
             token.setRememberMe(true);  //是否记住用户，是true，否false（rememberMe只能记住你登录过，但不会记住你是谁以及你的权限信息。）
             try {
                 currentUser.login(token);   //当我们获登录用户之后

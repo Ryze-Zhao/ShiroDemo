@@ -32,7 +32,7 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         System.out.println("执行认证逻辑");
      /*   //假设数据库中用户表的账号密码
-        String username = "test";
+        String username = "user";
         String password = "123456";*/
         //1、将authenticationToken转换为UsernamePasswordToken
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;

@@ -1,22 +1,20 @@
 package com.zhaolearn.shirointegration.domain;
 
 
-import org.springframework.data.jpa.domain.AbstractAuditable;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table( name ="user" )
-public class User implements Serializable{
+@Table( name ="role" )
+public class Role  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private Long id;
+    @Column(name = "role_name")
+    private String roleName;
     @Column(name = "user_name")
     private String userName;
-    @Column(name = "password")
-    private String passWord;
 
     public Long getId() {
         return id;
@@ -24,6 +22,14 @@ public class User implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getUserName() {
@@ -34,20 +40,12 @@ public class User implements Serializable{
         this.userName = userName;
     }
 
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
     @Override
     public String toString() {
-        return "User{" +
+        return "Role{" +
                 "id=" + id +
+                ", roleName='" + roleName + '\'' +
                 ", userName='" + userName + '\'' +
-                ", passWord='" + passWord + '\'' +
                 '}';
     }
 }
