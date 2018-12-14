@@ -7,12 +7,15 @@ import com.zhaolearn.shirointegration.service.ShiroService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class ShiroServiceImpl implements ShiroService {
+    private final static Logger logger = LoggerFactory.getLogger(ShiroServiceImpl.class);
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -31,6 +34,7 @@ public class ShiroServiceImpl implements ShiroService {
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassWord());//封装用户参数
         token.setRememberMe(true);//是否记住用户，是true，否false（rememberMe只能记住你登录过，但不会记住你是谁以及你的权限信息。）
         try {
+            logger.info("test");
             subject.login(token);//执行登录方法，如果没异常就是登录成功
         } catch (UnknownAccountException uae) {
             //账户不存在

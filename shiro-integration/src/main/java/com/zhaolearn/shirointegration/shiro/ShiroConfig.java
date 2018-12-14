@@ -4,6 +4,8 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +15,12 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
+    private final static Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
     //创建ShiroFilterFactoryBean
     @Bean("shiroFilterFactoryBean")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(
             @Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
+logger.info("jinlaile");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
         /*
@@ -54,6 +58,15 @@ public class ShiroConfig {
         return new UserRealm();
     }
 
+
+    /**
+     * 配置ShiroDialect用于thymeleaf和shiro标签配合使用
+     */
+    @Bean("shiroDialect")
+    public ShiroDialect getShiroDialect(){
+        return new ShiroDialect();
+    }
+
     /**
      * 注入加密方式一：
      * * 凭证匹配器
@@ -69,11 +82,5 @@ public class ShiroConfig {
         return hashedCredentialsMatcher;
     }*/
 
-    /**
-     * 配置ShiroDialect用于thymeleaf和shiro标签配合使用
-     */
-  /*  @Bean("shiroDialect")
-    public ShiroDialect getShiroDialect(){
-        return new ShiroDialect();
-    }*/
+
 }
