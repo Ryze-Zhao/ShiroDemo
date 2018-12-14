@@ -17,17 +17,27 @@ public class UserController {
     @Autowired
     private ShiroService shiroService;
     //RESTful规范
-    @GetMapping(value = "/index")
+    @GetMapping(value = "/index")//首页
     public String toIdex() {
         return "/index";
     }
-
-    @GetMapping(value = "/tologin")
+    @GetMapping(value = "/tologin")//登录页
     public String toLogin() {
         return "/tologin";
     }
-
-    @PostMapping(value = "/login")
+    @GetMapping(value = "/userPage")//登录后页面
+    public String userPage() {
+        return "/UserPage";
+    }
+    @GetMapping(value = "/add")//增加页
+    public String add() {
+        return "/user/add";
+    }
+    @GetMapping(value = "/update")//修改页
+    public String update() {
+        return "/user/update";
+    }
+    @PostMapping(value = "/login")//登录验证
     public String login(User user, Model model) {
         log.info("-------------------" + user.toString());
         try {
@@ -38,22 +48,4 @@ public class UserController {
         }
         return "redirect:/demo/userPage";
     }
-
-    @GetMapping(value = "/userPage")
-    public String userPage() {
-        return "/UserPage";
-    }
-
-
-
-    @GetMapping(value = "/add")
-    public String add() {
-        return "/user/add";
-    }
-
-    @GetMapping(value = "/update")
-    public String update() {
-        return "/user/update";
-    }
-
 }

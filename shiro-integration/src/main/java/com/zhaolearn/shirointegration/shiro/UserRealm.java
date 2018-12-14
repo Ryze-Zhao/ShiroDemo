@@ -52,7 +52,8 @@ public class UserRealm extends AuthorizingRealm {
             return null;//shiro底层会抛出UnknownAccountException，表示不存在用户
         }
         log.info("-------------------" + user.toString());
-        //3、判断密码,AuthenticationInfo的子类SimpleAuthenticationInfo,第一个参数放入参数是为了User user = (User) subject.getPrincipal();能拿到
+        //3、判断密码,AuthenticationInfo的子类SimpleAuthenticationInfo,
+        // 第一个参数放入参数是为了上边授权逻辑的User user = (User) subject.getPrincipal();能拿到
         return new SimpleAuthenticationInfo(user, user.getPassWord(), "");
     }
 }

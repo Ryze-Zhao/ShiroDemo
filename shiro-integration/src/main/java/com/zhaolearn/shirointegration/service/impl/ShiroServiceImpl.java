@@ -17,11 +17,17 @@ public class ShiroServiceImpl implements ShiroService {
     private UserRepository userRepository;
     @Autowired
     private PermissionRepository permissionRepository;
-
+    @Override
+    public User findByUserName(String username) {
+        return userRepository.findByUserName(username);
+    }
+    @Override
+    public String findPermByUserName(String userName) {
+        return permissionRepository.findPermByUserName(userName);
+    }
     @Override
     public void loginCheck(User user) throws Exception {
-        Subject subject = SecurityUtils.getSubject();
-
+        Subject subject = SecurityUtils.getSubject();//获取当前操作系统的用户
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassWord());//封装用户参数
         token.setRememberMe(true);//是否记住用户，是true，否false（rememberMe只能记住你登录过，但不会记住你是谁以及你的权限信息。）
         try {
@@ -39,18 +45,5 @@ public class ShiroServiceImpl implements ShiroService {
             //无法判断是什么错
             throw new Exception("未知错误");
         }
-
     }
-
-    @Override
-    public User findByUserName(String username) {
-        return userRepository.findByUserName(username);
-    }
-
-    @Override
-    public String findPermByUserName(String userName) {
-        return permissionRepository.findPermByUserName(userName);
-    }
-
-
 }
