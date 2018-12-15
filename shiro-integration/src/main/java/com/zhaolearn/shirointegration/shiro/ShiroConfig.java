@@ -20,7 +20,7 @@ public class ShiroConfig {
     @Bean("shiroFilterFactoryBean")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(
             @Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
-logger.info("jinlaile");
+        logger.info("jinlaile");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
         /*
@@ -29,13 +29,14 @@ logger.info("jinlaile");
          * 4.2    authc：必须认证
          * 4.3    user：如果使用rememberMe功能可以直接访问
          * 4.4    perms[]：该资源必须有该权限才可以访问
-         * 4.5    role[]：该资源必须有该角色才可以访问
+         * 4.5    roles[]：该资源必须有该角色才可以访问
          */
         Map<String, String> filterMap = new LinkedHashMap<>(); //为了保证有序采用Linked，key是拦截路径，value是过滤器
         filterMap.put("/demo/index", "anon");
         filterMap.put("/demo/tologin", "anon");
         filterMap.put("/demo/login", "anon");
         filterMap.put("/demo/add", "perms[perm1]");
+        filterMap.put("/demo/update", "roles[admin]");
         //一个目录下可以使用这个，这个是controller路径
         filterMap.put("/demo/*", "authc");
         shiroFilterFactoryBean.setLoginUrl("/demo/tologin");//拦截后跳转到的页面

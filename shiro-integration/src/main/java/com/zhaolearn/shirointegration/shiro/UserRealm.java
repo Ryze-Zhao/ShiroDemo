@@ -35,6 +35,9 @@ public class UserRealm extends AuthorizingRealm {
         String perm = shiroService.findPermByUserName(user.getUserName());//通过当前登录用户id查找的数据库用户
         log.info("-------------------" + perm);
         info.addStringPermission(perm);
+        String role=shiroService.findRoleByUserName(user.getUserName()).getRoleName();
+        log.info("-------------------" + role);
+        info.addRole(role);
         return info;
     }
     /**

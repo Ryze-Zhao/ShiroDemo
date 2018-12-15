@@ -1,7 +1,9 @@
 package com.zhaolearn.shirointegration.service.impl;
 
+import com.zhaolearn.shirointegration.domain.Role;
 import com.zhaolearn.shirointegration.domain.User;
 import com.zhaolearn.shirointegration.repository.PermissionRepository;
+import com.zhaolearn.shirointegration.repository.RoleRepository;
 import com.zhaolearn.shirointegration.repository.UserRepository;
 import com.zhaolearn.shirointegration.service.ShiroService;
 import org.apache.shiro.SecurityUtils;
@@ -19,6 +21,8 @@ public class ShiroServiceImpl implements ShiroService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
     private PermissionRepository permissionRepository;
     @Override
     public User findByUserName(String username) {
@@ -28,6 +32,12 @@ public class ShiroServiceImpl implements ShiroService {
     public String findPermByUserName(String userName) {
         return permissionRepository.findPermByUserName(userName);
     }
+
+    @Override
+    public Role findRoleByUserName(String userName) {
+        return roleRepository.findByUserName(userName);
+    }
+
     @Override
     public void loginCheck(User user) throws Exception {
         Subject subject = SecurityUtils.getSubject();//获取当前操作系统的用户
