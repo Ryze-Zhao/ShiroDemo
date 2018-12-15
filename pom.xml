@@ -7,6 +7,11 @@
     <groupId>com.zhaolearn</groupId>
     <artifactId>shiro</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <modules>
+        <module>shiro-integration</module>
+        <module>shiro-demo2</module>
+        <module>shiro-study1</module>
+        <module>shiro-demo1</module>
+    </modules>
 
 </project>
