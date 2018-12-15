@@ -12,6 +12,8 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Set;
+
 /**
  * 自定义Realm
  */
@@ -19,8 +21,10 @@ public class UserRealm extends AuthorizingRealm {
     private final static org.slf4j.Logger log = LoggerFactory.getLogger(UserRealm.class);
     @Autowired
     private ShiroService shiroService;
+
     /**
      * 执行授权逻辑
+     *
      * @param principalCollection
      * @return
      */
@@ -38,10 +42,13 @@ public class UserRealm extends AuthorizingRealm {
         String role=shiroService.findRoleByUserName(user.getUserName()).getRoleName();
         log.info("-------------------" + role);
         info.addRole(role);
+
         return info;
     }
+
     /**
      * 执行认证逻辑
+     *
      * @param authenticationToken
      * @return
      * @throws AuthenticationException

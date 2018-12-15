@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 
 @Service
 public class ShiroServiceImpl implements ShiroService {
@@ -36,6 +38,11 @@ public class ShiroServiceImpl implements ShiroService {
     @Override
     public Role findRoleByUserName(String userName) {
         return roleRepository.findByUserName(userName);
+    }
+
+    @Override
+    public Set<String> findRolesByUserName(String userName) {
+        return roleRepository.findRolesByUserName(userName);
     }
 
     @Override
