@@ -8,8 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -24,6 +26,16 @@ public class ShiroConfig {
     @Bean("myRoleAuthorizationFilter")
     public MyRoleAuthorizationFilter getMyRoleAuthorizationFilter() {
         return new MyRoleAuthorizationFilter();
+    }
+
+    @Bean("filterRegistrationBean")
+    public FilterRegistrationBean delegatingFilterProxy(){
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+        proxy.setTargetFilterLifecycle(true);
+        proxy.setTargetBeanName("shiroFilterFactoryBean");
+        filterRegistrationBean.setFilter(proxy);
+        return filterRegistrationBean;
     }
 
     //创建ShiroFilterFactoryBean
@@ -51,7 +63,7 @@ public class ShiroConfig {
         filterChainMap.put("/demo/index", "anon");
         filterChainMap.put("/demo/tologin", "anon");
         filterChainMap.put("/demo/login", "anon");
-        filterChainMap.put("/demo/add", "perms[perm1,perm3]");
+        filterChainMap.put("/demo/add", "myRoleFilter[perm1,perm3]");
         filterChainMap.put("/demo/update", "myRoleFilter[admin,test]");
         //一个目录下可以使用这个，这个是controller路径
         filterChainMap.put("/demo/*", "authc");
