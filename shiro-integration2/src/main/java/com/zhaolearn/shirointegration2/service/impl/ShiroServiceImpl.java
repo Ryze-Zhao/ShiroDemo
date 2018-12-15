@@ -46,6 +46,11 @@ public class ShiroServiceImpl implements ShiroService {
     }
 
     @Override
+    public Set<String> findPermsByUserName(String userName) {
+        return permissionRepository.findPermsByUserName(userName);
+    }
+
+    @Override
     public void loginCheck(User user) throws Exception {
         Subject subject = SecurityUtils.getSubject();//获取当前操作系统的用户
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassWord());//封装用户参数

@@ -5,15 +5,23 @@
     <title>测试</title>
 </head>
 <body>
-<div shiro:hasAnyPermission="perm1,perm3">
-<a href="/demo/add">用户添加</a>
+<div shiro:hasAnyPermissions="perm1,perm2">
+<a href="/demo/add">perm1,perm2可见增加页面</a>
+</div>
+<div shiro:hasAnyPermissions="perm2,perm3">
+    <a href="/demo/add">perm2,perm3可见增加页面</a>
+</div>
+<div shiro:hasAnyPermissions="perm1,perm3">
+    <a href="/demo/add">perm1,perm3可见增加页面</a>
 </div>
 <div shiro:hasAnyRoles="admin,test">
-<a href="/demo/update">用户修改</a>
+    <a href="/demo/update">admin,test可见修改页面</a>
 </div>
-<a href="/demo/users">用户查看</a>
-<div shiro:hasAnyRoles="guest">
-    <a href="#">测试游客显示</a>
+<div shiro:hasAnyRoles="admin,guest">
+    <a href="/demo/update">admin,guest可见修改页面</a>
+</div>
+<div shiro:hasAnyRoles="guest,test">
+<a href="/demo/update">guest,test可见修改页面</a>
 </div>
 </body>
 </html>

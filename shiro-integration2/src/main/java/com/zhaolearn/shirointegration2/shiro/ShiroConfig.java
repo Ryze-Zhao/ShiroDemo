@@ -1,7 +1,6 @@
 package com.zhaolearn.shirointegration2.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.slf4j.Logger;
@@ -23,10 +22,13 @@ public class ShiroConfig {
     @Autowired
     private MyRoleAuthorizationFilter myRoleAuthorizationFilter;
 
+
     @Bean("myRoleAuthorizationFilter")
     public MyRoleAuthorizationFilter getMyRoleAuthorizationFilter() {
         return new MyRoleAuthorizationFilter();
     }
+
+
 
     @Bean("filterRegistrationBean")
     public FilterRegistrationBean delegatingFilterProxy(){

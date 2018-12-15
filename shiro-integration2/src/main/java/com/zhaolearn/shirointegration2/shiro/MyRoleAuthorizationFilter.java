@@ -9,8 +9,7 @@ import javax.servlet.ServletResponse;
 
 public class MyRoleAuthorizationFilter extends AuthorizationFilter {
     @Override
-    protected boolean isAccessAllowed(ServletRequest servletRequest
-, ServletResponse servletResponse, Object value) throws Exception {
+    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object value) throws Exception {
         Subject subject = getSubject(servletRequest, servletResponse);
         String[] rolesOrPerms = (String[]) value;
         if (rolesOrPerms == null || rolesOrPerms.length == 0) {

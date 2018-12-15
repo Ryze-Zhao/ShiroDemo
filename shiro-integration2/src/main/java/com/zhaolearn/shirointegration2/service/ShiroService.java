@@ -15,4 +15,6 @@ public interface ShiroService {
     Role findRoleByUserName(String userName);
 
     Set<String> findRolesByUserName(String userName);
+
+    Set<String> findPermsByUserName(String userName);
 }

@@ -36,13 +36,16 @@ public class UserRealm extends AuthorizingRealm {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
         //到数据库查询当前登录用户的授权字符串
-        String perm = shiroService.findPermByUserName(user.getUserName());//通过当前登录用户id查找的数据库用户
+      /*  String perm = shiroService.findPermByUserName(user.getUserName());//通过当前登录用户id查找的数据库用户
         log.info("-------------------" + perm);
         info.addStringPermission(perm);
         String role=shiroService.findRoleByUserName(user.getUserName()).getRoleName();
         log.info("-------------------" + role);
-        info.addRole(role);
-
+        info.addRole(role);*/
+        Set<String> permSet = shiroService.findPermsByUserName(user.getUserName());
+        info.setStringPermissions(permSet);
+        Set<String> roleSet = shiroService.findRolesByUserName(user.getUserName());
+        info.setRoles(roleSet);
         return info;
     }
 
