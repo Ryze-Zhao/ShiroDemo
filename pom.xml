@@ -10,6 +10,7 @@
     <modules>
         <module>shiro-integration</module>
         <module>shiro-integration2</module>
+        <module>shiro-integration3</module>
         <module>shiro-demo2</module>
         <module>shiro-study1</module>
         <module>shiro-demo1</module>
