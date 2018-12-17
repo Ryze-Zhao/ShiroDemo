@@ -15,6 +15,7 @@
         <module>shiro-study1</module>
         <module>shiro-demo1</module>
         <module>shiro-sso</module>
+        <module>shiro-jwt</module>
     </modules>
 
 </project>
