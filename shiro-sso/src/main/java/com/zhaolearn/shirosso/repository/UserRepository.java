@@ -1,6 +1,6 @@
-package com.zhaolearn.shirointegration2.repository;
+package com.zhaolearn.shirosso.repository;
 
-import com.zhaolearn.shirointegration2.domain.User;
+import com.zhaolearn.shirosso.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

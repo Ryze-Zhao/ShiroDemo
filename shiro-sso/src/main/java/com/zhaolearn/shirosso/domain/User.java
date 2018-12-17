@@ -1,4 +1,4 @@
-package com.zhaolearn.shirointegration2.domain;
+package com.zhaolearn.shirosso.domain;
 
 
 import org.springframework.data.jpa.domain.AbstractAuditable;

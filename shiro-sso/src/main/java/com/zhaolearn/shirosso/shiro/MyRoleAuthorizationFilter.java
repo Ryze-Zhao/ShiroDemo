@@ -1,4 +1,4 @@
-package com.zhaolearn.shirointegration2.shiro;
+package com.zhaolearn.shirosso.shiro;
 
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;

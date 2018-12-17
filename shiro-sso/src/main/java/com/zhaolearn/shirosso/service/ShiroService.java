@@ -1,7 +1,7 @@
-package com.zhaolearn.shirointegration2.service;
+package com.zhaolearn.shirosso.service;
 
-import com.zhaolearn.shirointegration2.domain.User;
-import com.zhaolearn.shirointegration2.domain.Role;
+import com.zhaolearn.shirosso.domain.User;
+import com.zhaolearn.shirosso.domain.Role;
 
 import java.util.Set;
 

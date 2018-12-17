@@ -1,11 +1,11 @@
-package com.zhaolearn.shirointegration2.service.impl;
+package com.zhaolearn.shirosso.service.impl;
 
-import com.zhaolearn.shirointegration2.domain.Role;
-import com.zhaolearn.shirointegration2.domain.User;
-import com.zhaolearn.shirointegration2.repository.PermissionRepository;
-import com.zhaolearn.shirointegration2.repository.RoleRepository;
-import com.zhaolearn.shirointegration2.repository.UserRepository;
-import com.zhaolearn.shirointegration2.service.ShiroService;
+import com.zhaolearn.shirosso.domain.Role;
+import com.zhaolearn.shirosso.domain.User;
+import com.zhaolearn.shirosso.repository.PermissionRepository;
+import com.zhaolearn.shirosso.repository.RoleRepository;
+import com.zhaolearn.shirosso.repository.UserRepository;
+import com.zhaolearn.shirosso.service.ShiroService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;

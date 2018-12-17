@@ -1,4 +1,4 @@
-package com.zhaolearn.shirointegration2.shiro;
+package com.zhaolearn.shirosso.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
