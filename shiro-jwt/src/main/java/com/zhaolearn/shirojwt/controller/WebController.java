@@ -26,13 +26,18 @@ public class WebController {
     private ShiroService shiroService;
 
     @PostMapping("/login")
-    public ResponseBean login(@RequestParam("username") String username,
-                              @RequestParam("password") String password) {
-        User user = shiroService.findByUserName(username);
-        if (user.getPassWord().equals(password)) {
-            return new ResponseBean(200, "Login success", JWTUtil.sign(username, password));
+    public ResponseBean login(User user) {
+        User sqlUser = shiroService.findByUserName(user.getUserName());
+        if(sqlUser==null){
+            throw new UnauthorizedException("不存在用户");
+        }else if(!sqlUser.getPassWord().equals(user.getPassWord())){
+            throw new UnauthorizedException("账户或密码不正确！！！");
+        }else if (sqlUser.getPassWord().equals(user.getPassWord())) {
+            return new ResponseBean(200, "Login success", JWTUtil.sign(user.getUserName(), user.getPassWord()));
+        } else if(false){
+            throw new UnauthorizedException("预留给封禁的账户");
         } else {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("未知错误");
         }
     }
 
