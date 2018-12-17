@@ -2,7 +2,6 @@ package com.zhaolearn.shirointegration3.shiro;
 
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
-import org.springframework.context.annotation.Bean;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;

@@ -2,6 +2,9 @@ package com.zhaolearn.shirointegration3.controller;
 
 import com.zhaolearn.shirointegration3.domain.User;
 import com.zhaolearn.shirointegration3.service.ShiroService;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,10 +33,12 @@ public class UserController {
         return "/UserPage";
     }
     @GetMapping(value = "/add")//增加页
+    @RequiresPermissions(logical = Logical.OR, value ={"perm1", "perm3"})
     public String add() {
         return "/user/add";
     }
     @GetMapping(value = "/update")//修改页
+    @RequiresRoles(logical = Logical.OR, value ={"admin", "test"})
     public String update() {
         return "/user/update";
     }
