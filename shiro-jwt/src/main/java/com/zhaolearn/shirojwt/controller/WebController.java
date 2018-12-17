@@ -27,6 +27,7 @@ public class WebController {
 
     @PostMapping("/login")
     public ResponseBean login(User user) {
+
         User sqlUser = shiroService.findByUserName(user.getUserName());
         if(sqlUser==null){
             throw new UnauthorizedException("不存在用户");

@@ -6,10 +6,7 @@ import com.zhaolearn.shirojwt.utils.JWTUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -73,7 +70,6 @@ public class MyRealm extends AuthorizingRealm {
         if (! JWTUtil.verify(token, username, user.getPassWord())) {
             throw new AuthenticationException("账号或密码出错");
         }
-
         return new SimpleAuthenticationInfo(token, token, "my_realm");
     }
 }
