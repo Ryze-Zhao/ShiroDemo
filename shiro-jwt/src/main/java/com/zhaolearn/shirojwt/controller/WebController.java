@@ -2,9 +2,7 @@ package com.zhaolearn.shirojwt.controller;
 
 import com.zhaolearn.shirojwt.domain.ResponseBean;
 import com.zhaolearn.shirojwt.domain.User;
-import com.zhaolearn.shirojwt.exception.UnauthorizedException;
 import com.zhaolearn.shirojwt.service.ShiroService;
-import com.zhaolearn.shirojwt.utils.JWTUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -17,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+
+@SuppressWarnings({"ALL", "AlibabaClassMustHaveAuthor"})
 @RestController
 public class WebController {
 
@@ -27,27 +27,13 @@ public class WebController {
 
     @PostMapping("/login")
     public ResponseBean login(User user) {
+        String result="";
         try {
-            shiroService.loginCheck(user);
-        } catch (UnauthorizedException e){
-            return new ResponseBean(200, "Login success", e.getMessage());
-        } catch (Exception e) {
-            throw new UnauthorizedException(e.getMessage());
+            result= shiroService.loginCheck(user);
+        }catch (Exception e) {
+            return new ResponseBean(200, e.getMessage(), null);
         }
-        return null;
-        /*User sqlUser = shiroService.findByUserName(user.getUserName());
-        if(sqlUser==null){
-            throw new UnauthorizedException("不存在用户");
-        }else if(!sqlUser.getPassWord().equals(user.getPassWord())){
-            throw new UnauthorizedException("账户或密码不正确！！！");
-        }else if (sqlUser.getPassWord().equals(user.getPassWord())) {
-            return new ResponseBean(200, "Login success", JWTUtil.sign(user.getUserName(), user.getPassWord()));
-        } else if(false){
-            throw new UnauthorizedException("预留给封禁的账户");
-        } else {
-            throw new UnauthorizedException("未知错误");
-        }*/
-
+        return new ResponseBean(200, "Login success", result);
     }
 
     @GetMapping("/article")
