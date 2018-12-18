@@ -18,7 +18,7 @@ import java.util.Set;
  * 自定义Realm
  */
 public class UserRealm extends AuthorizingRealm {
-    private final static org.slf4j.Logger log = LoggerFactory.getLogger(UserRealm.class);
+    private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(UserRealm.class);
     @Autowired
     private ShiroService shiroService;
 

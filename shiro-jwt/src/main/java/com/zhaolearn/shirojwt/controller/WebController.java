@@ -29,6 +29,7 @@ public class WebController {
     public ResponseBean login(User user) {
         String result="";
         try {
+            //进入这个方法，最后会进入到自定义Realm的AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth)方法
             result= shiroService.loginCheck(user);
         }catch (Exception e) {
             return new ResponseBean(200, e.getMessage(), null);

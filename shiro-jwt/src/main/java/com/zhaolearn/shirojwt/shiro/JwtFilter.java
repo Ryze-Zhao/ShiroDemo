@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class JWTFilter extends BasicHttpAuthenticationFilter {
+/**
+ * @author: HeHaoZhao
+ * @date: 12:49 2018/12/18
+ */
+public class JwtFilter extends BasicHttpAuthenticationFilter {
 
-    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(JwtFilter.class);
 
     /**
      * 判断用户是否想要登入。

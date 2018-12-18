@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/demo")
 public class UserController {
-    private final static org.slf4j.Logger log = LoggerFactory.getLogger(UserController.class);
+    private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private ShiroService shiroService;
     //RESTful规范
@@ -39,7 +39,7 @@ public class UserController {
     }
     @PostMapping(value = "/login")//登录验证
     public String login(User user, Model model) {
-        log.info("-------------------" + user.toString());
+        LOGGER.info("-------------------" + user.toString());
         try {
             shiroService.loginCheck(user);
         } catch (Exception e) {
