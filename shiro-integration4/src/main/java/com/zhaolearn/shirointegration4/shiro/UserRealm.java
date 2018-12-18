@@ -30,16 +30,15 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("执行授权逻辑");//给资源进行授权
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        //获取当前用户
-        Subject subject = SecurityUtils.getSubject();
-        User user = (User) subject.getPrincipal();
+        LOGGER.info("进入授权逻辑");
+        String username = JwtUtil.getUsername(principalCollection.toString());
+        User user = shiroService.findByUserName(username);
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         Set<String> permSet = shiroService.findPermsByUserName(user.getUserName());
-        info.setStringPermissions(permSet);
+        simpleAuthorizationInfo.setStringPermissions(permSet);
         Set<String> roleSet = shiroService.findRolesByUserName(user.getUserName());
-        info.setRoles(roleSet);
-        return info;
+        simpleAuthorizationInfo.setRoles(roleSet);
+        return simpleAuthorizationInfo;
     }
 
     /**
@@ -51,15 +50,20 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("执行认证逻辑");
-        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        User user = shiroService.findByUserName(token.getUsername());
+        LOGGER.info("进入认证逻辑");
+        String token = (String) authenticationToken.getCredentials();
+        // 解密获得username，用于和数据库进行对比
+        String username = JwtUtil.getUsername(token);
+        User user = shiroService.findByUserName(username);
         if (user == null) {
-            return null;//shiro底层会抛出UnknownAccountException，表示不存在用户
+            //shiro底层会抛出UnknownAccountException，表示不存在用户
+            return null;
         }
-        LOGGER.info("-------------------" + user.toString());
-        //3、判断密码,AuthenticationInfo的子类SimpleAuthenticationInfo,
-        // 第一个参数放入参数是为了上边授权逻辑的User user = (User) subject.getPrincipal();能拿到
-        return new SimpleAuthenticationInfo(user, user.getPassWord(), "");
+        //用于其他位置的验证
+        if(!JwtUtil.verify(token,user.getUserName(),user.getPassWord())){
+            throw new IncorrectCredentialsException("Toekn不正确");
+        }
+        return new SimpleAuthenticationInfo(token, token, getClass().getName());
     }
+
 }
