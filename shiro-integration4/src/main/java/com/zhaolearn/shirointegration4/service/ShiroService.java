@@ -1,12 +1,13 @@
 package com.zhaolearn.shirointegration4.service;
 
+import com.zhaolearn.shirointegration4.common.ResultDTO;
 import com.zhaolearn.shirointegration4.domain.User;
 import com.zhaolearn.shirointegration4.domain.Role;
 
 import java.util.Set;
 
 public interface ShiroService {
-    void loginCheck(User user) throws Exception;
+    ResultDTO loginCheck(User user);
 
     User findByUserName(String username);
 

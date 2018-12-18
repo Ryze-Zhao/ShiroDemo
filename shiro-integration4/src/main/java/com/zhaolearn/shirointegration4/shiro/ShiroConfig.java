@@ -1,6 +1,8 @@
 package com.zhaolearn.shirointegration4.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
+import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -17,12 +19,68 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
     private final static Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
+
+    @Bean("securityManager")
+    public DefaultWebSecurityManager getManager(UserRealm userRealm) {
+        DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
+        // 使用自己的userRealm
+        manager.setRealm(userRealm);
+        /*
+         * 关闭shiro自带的session，详情见文档
+         * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
+         */
+        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
+        DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
+        defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
+        subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
+        manager.setSubjectDAO(subjectDAO);
+        return manager;
+    }
+
+    //创建ShiroFilterFactoryBean
+    @Bean("shiroFilter")
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(
+            @Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
+        ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
+        factoryBean.setSecurityManager(securityManager);
+        // 添加自己的过滤器并且取名为jwt
+        Map<String, Filter> filterMap = new LinkedHashMap<>();
+        filterMap.put("MyFilter", new MyFilter());
+        factoryBean.setFilters(filterMap);
+        factoryBean.setUnauthorizedUrl("/401");
+        //自定义url规则http://shiro.apache.org/web.html#urls
+        Map<String, String> filterRuleMap = new LinkedHashMap<>();
+        // 访问401和404页面不通过我们的Filter
+        filterRuleMap.put("/401", "anon");
+        filterRuleMap.put("/login", "anon");
+        // 所有请求通过我们自己的Filter
+        filterRuleMap.put("/**", "MyFilter");
+        factoryBean.setFilterChainDefinitionMap(filterRuleMap);
+        return factoryBean;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Bean("filterRegistrationBean")
     public FilterRegistrationBean delegatingFilterProxy(){
@@ -34,37 +92,9 @@ public class ShiroConfig {
         return filterRegistrationBean;
     }
 
-    //创建ShiroFilterFactoryBean
-    @Bean("shiroFilterFactoryBean")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(
-            @Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
-        logger.info("jinlaile");
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
-        /*
-         * 4    Shiro内置过滤器，可以实现权限相关的拦截器，常用过滤器
-         * 4.1    anon：无需认证
-         * 4.2    authc：必须认证
-         * 4.3    user：如果使用rememberMe功能可以直接访问
-         * 4.4    perms[]：该资源必须有该权限才可以访问
-         * 4.5    roles[]：该资源必须有该角色才可以访问
-         */
-        Map<String, String> filterChainMap = new LinkedHashMap<>(); //为了保证有序采用Linked，key是拦截路径，value是过滤器
 
-        filterChainMap.put("/**", "authc");
-        shiroFilterFactoryBean.setLoginUrl("/tologin");//拦截后跳转到的页面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/index");//未授权自动跳转到的页面
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainMap);
-        return shiroFilterFactoryBean;
-    }
 
-    //创建DefaultWebSecurityManager
-    @Bean("defaultWebSecurityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
-        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-        defaultWebSecurityManager.setRealm(userRealm);
-        return defaultWebSecurityManager;
-    }
+
 
     //创建Realm,返回的值放入Spring
     @Bean("userRealm")
