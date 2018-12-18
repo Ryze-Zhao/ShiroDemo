@@ -58,7 +58,19 @@ public class MyRealm extends AuthorizingRealm {
         String token = (String) auth.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtil.getUsername(token);
-        if (username == null) {
+        User user = shiroService.findByUserName(username);
+        if (user == null) {
+            return null;//shiro底层会抛出UnknownAccountException，表示不存在用户
+        }
+        if(!JWTUtil.verify(token,user.getUserName(),user.getPassWord())){
+
+        }
+
+        LOGGER.info("-------------------" + user.toString());
+        //3、判断密码,AuthenticationInfo的子类SimpleAuthenticationInfo,
+        // 第一个参数放入参数是为了上边授权逻辑的User user = (User) subject.getPrincipal();能拿到
+        return new SimpleAuthenticationInfo(token, token, getClass().getName());
+/*        if (username == null) {
             throw new AuthenticationException("token不存在");
         }
 
@@ -70,6 +82,6 @@ public class MyRealm extends AuthorizingRealm {
         if (! JWTUtil.verify(token, username, user.getPassWord())) {
             throw new AuthenticationException("账号或密码出错");
         }
-        return new SimpleAuthenticationInfo(token, token, "my_realm");
+        return new SimpleAuthenticationInfo(token, token, "my_realm");*/
     }
 }

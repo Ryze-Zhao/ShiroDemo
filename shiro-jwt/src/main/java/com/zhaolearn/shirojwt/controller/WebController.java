@@ -27,8 +27,15 @@ public class WebController {
 
     @PostMapping("/login")
     public ResponseBean login(User user) {
-
-        User sqlUser = shiroService.findByUserName(user.getUserName());
+        try {
+            shiroService.loginCheck(user);
+        } catch (UnauthorizedException e){
+            return new ResponseBean(200, "Login success", e.getMessage());
+        } catch (Exception e) {
+            throw new UnauthorizedException(e.getMessage());
+        }
+        return null;
+        /*User sqlUser = shiroService.findByUserName(user.getUserName());
         if(sqlUser==null){
             throw new UnauthorizedException("不存在用户");
         }else if(!sqlUser.getPassWord().equals(user.getPassWord())){
@@ -39,7 +46,8 @@ public class WebController {
             throw new UnauthorizedException("预留给封禁的账户");
         } else {
             throw new UnauthorizedException("未知错误");
-        }
+        }*/
+
     }
 
     @GetMapping("/article")
