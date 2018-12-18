@@ -40,6 +40,7 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        LOGGER.info("进入授权逻辑");
         String username = JWTUtil.getUsername(principals.toString());
         User user = shiroService.findByUserName(username);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -55,6 +56,7 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
+       LOGGER.info("进入认证逻辑");
         String token = (String) auth.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtil.getUsername(token);
@@ -63,6 +65,7 @@ public class MyRealm extends AuthorizingRealm {
             //shiro底层会抛出UnknownAccountException，表示不存在用户
             return null;
         }
+        //用于其他位置的验证
         if(!JWTUtil.verify(token,user.getUserName(),user.getPassWord())){
             throw new IncorrectCredentialsException("Toekn不正确");
         }

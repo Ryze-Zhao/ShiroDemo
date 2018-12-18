@@ -1,4 +1,4 @@
-package com.zhaolearn.shirojwt.utils;
+package com.zhaolearn.shirointegration4.shiro;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -6,10 +6,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
-public class JWTUtil {
+public class JwtUtil {
 
     // 过期时间5分钟
     private static final long EXPIRE_TIME = 5*60*1000;

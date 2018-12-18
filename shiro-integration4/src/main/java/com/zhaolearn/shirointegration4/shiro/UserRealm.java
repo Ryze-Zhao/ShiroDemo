@@ -1,7 +1,7 @@
-package com.zhaolearn.shirointegration.shiro;
+package com.zhaolearn.shirointegration4.shiro;
 
-import com.zhaolearn.shirointegration.domain.User;
-import com.zhaolearn.shirointegration.service.ShiroService;
+import com.zhaolearn.shirointegration4.domain.User;
+import com.zhaolearn.shirointegration4.service.ShiroService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -35,14 +35,10 @@ public class UserRealm extends AuthorizingRealm {
         //获取当前用户
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
-        //到数据库查询当前登录用户的授权字符串
-        String perm = shiroService.findPermByUserName(user.getUserName());//通过当前登录用户id查找的数据库用户
-        LOGGER.info("-------------------" + perm);
-        info.addStringPermission(perm);
-        String role=shiroService.findRoleByUserName(user.getUserName()).getRoleName();
-        LOGGER.info("-------------------" + role);
-        info.addRole(role);
-
+        Set<String> permSet = shiroService.findPermsByUserName(user.getUserName());
+        info.setStringPermissions(permSet);
+        Set<String> roleSet = shiroService.findRolesByUserName(user.getUserName());
+        info.setRoles(roleSet);
         return info;
     }
 
