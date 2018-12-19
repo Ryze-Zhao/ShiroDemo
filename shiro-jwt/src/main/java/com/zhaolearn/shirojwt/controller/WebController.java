@@ -54,13 +54,13 @@ public class WebController {
     }
 
     @GetMapping("/require_role")
-    @RequiresRoles(logical = Logical.OR, value = {"test", "admin"})
+    @RequiresRoles(logical = Logical.OR, value = {"test", "admin","test1"})
     public ResponseBean requireRole() {
         return new ResponseBean(200, "You are visiting require_role", null);
     }
 
     @GetMapping("/require_permission")
-    @RequiresPermissions(logical = Logical.OR, value = {"perm1", "perm3"})
+    @RequiresPermissions(logical = Logical.OR, value = {"perm1", "perm3","perm2","perm4"})
     public ResponseBean requirePermission() {
         return new ResponseBean(200, "You are visiting permission require edit,view", null);
     }

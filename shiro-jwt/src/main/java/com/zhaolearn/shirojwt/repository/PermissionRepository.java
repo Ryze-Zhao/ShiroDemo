@@ -13,6 +13,10 @@ public interface PermissionRepository extends JpaRepository<Permission, Long>, J
     @Query("select pt.permName from Permission pt,Role rt where pt.roleName=rt.roleName AND rt.userName=:canshu")
     String findPermByUserName(@Param("canshu") String canshu);
 
+    Set<String> findPermissionsByRoleNameIn(Set<String> roleNames);
+
+    Permission findPermissionByRoleName(String roleName);
+
     @Query("select pt.permName from Permission pt,Role rt where pt.roleName=rt.roleName AND rt.userName=:canshu")
     Set<String> findPermsByUserName(@Param("canshu") String canshu);
 }

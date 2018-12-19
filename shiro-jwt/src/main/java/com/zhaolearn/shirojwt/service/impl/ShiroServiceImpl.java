@@ -1,5 +1,6 @@
 package com.zhaolearn.shirojwt.service.impl;
 
+import com.zhaolearn.shirojwt.domain.Permission;
 import com.zhaolearn.shirojwt.domain.Role;
 import com.zhaolearn.shirojwt.domain.User;
 import com.zhaolearn.shirojwt.repository.PermissionRepository;
@@ -50,6 +51,16 @@ public class ShiroServiceImpl implements ShiroService {
     @Override
     public Set<String> findPermsByUserName(String userName) {
         return permissionRepository.findPermsByUserName(userName);
+    }
+
+    @Override
+    public Set<String> findPermissionByRoleNameIn(Set<String> roleNameSet) {
+        return permissionRepository.findPermissionsByRoleNameIn(roleNameSet);
+    }
+
+    @Override
+    public Permission findPermissionByRoleName(String roleName) {
+        return permissionRepository.findPermissionByRoleName(roleName);
     }
 
     @Override

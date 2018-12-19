@@ -44,10 +44,13 @@ public class MyRealm extends AuthorizingRealm {
         String username = JWTUtil.getUsername(principals.toString());
         User user = shiroService.findByUserName(username);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        Set<String> permSet = shiroService.findPermsByUserName(user.getUserName());
-        simpleAuthorizationInfo.setStringPermissions(permSet);
-        Set<String> roleSet = shiroService.findRolesByUserName(user.getUserName());
-        simpleAuthorizationInfo.setRoles(roleSet);
+
+        String roleName = shiroService.findRoleByUserName(user.getUserName()).getRoleName();
+        // Set<String> roleSet = shiroService.findRolesByUserName(user.getUserName());
+        simpleAuthorizationInfo.addRole(roleName);
+        Set<String> permNameSet = new HashSet<>(Arrays.asList(shiroService.findPermissionByRoleName(roleName).getPermName().split(",")));
+        permNameSet.stream().forEach(e -> LOGGER.info(e));
+        simpleAuthorizationInfo.addStringPermissions(permNameSet);
         return simpleAuthorizationInfo;
     }
 

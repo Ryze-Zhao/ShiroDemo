@@ -1,5 +1,6 @@
 package com.zhaolearn.shirojwt.service;
 
+import com.zhaolearn.shirojwt.domain.Permission;
 import com.zhaolearn.shirojwt.domain.User;
 import com.zhaolearn.shirojwt.domain.Role;
 
@@ -17,4 +18,8 @@ public interface ShiroService {
     Set<String> findRolesByUserName(String userName);
 
     Set<String> findPermsByUserName(String userName);
+
+    Set<String> findPermissionByRoleNameIn(Set<String> roleNameSet);
+
+    Permission findPermissionByRoleName(String roleName);
 }
