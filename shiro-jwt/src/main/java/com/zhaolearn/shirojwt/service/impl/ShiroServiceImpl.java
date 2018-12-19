@@ -6,7 +6,7 @@ import com.zhaolearn.shirojwt.repository.PermissionRepository;
 import com.zhaolearn.shirojwt.repository.RoleRepository;
 import com.zhaolearn.shirojwt.repository.UserRepository;
 import com.zhaolearn.shirojwt.service.ShiroService;
-import com.zhaolearn.shirojwt.shiro.JWTToken;
+import com.zhaolearn.shirojwt.shiro.JwtToken;
 import com.zhaolearn.shirojwt.utils.JWTUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -58,7 +58,7 @@ public class ShiroServiceImpl implements ShiroService {
         Subject subject = SecurityUtils.getSubject();
         String tokenStrinf=JWTUtil.sign(user.getUserName(), user.getPassWord());
         //封装用户参数
-        JWTToken token = new JWTToken(tokenStrinf);
+        JwtToken token = new JwtToken(tokenStrinf);
         try {
             //执行登录方法，如果没异常就是登录成功
             subject.login(token);

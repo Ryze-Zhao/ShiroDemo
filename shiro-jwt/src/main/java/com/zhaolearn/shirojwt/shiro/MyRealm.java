@@ -32,7 +32,7 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof JWTToken;
+        return token instanceof JwtToken;
     }
 
     /**
