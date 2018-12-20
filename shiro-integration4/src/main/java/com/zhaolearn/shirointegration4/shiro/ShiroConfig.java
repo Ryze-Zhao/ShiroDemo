@@ -119,7 +119,7 @@ public class ShiroConfig {
      *
      * @return
      */
-    @Bean
+/*    @Bean
     @DependsOn("lifecycleBeanPostProcessor")
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
@@ -128,6 +128,7 @@ public class ShiroConfig {
         defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
         return defaultAdvisorAutoProxyCreator;
     }
+*/
 
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {

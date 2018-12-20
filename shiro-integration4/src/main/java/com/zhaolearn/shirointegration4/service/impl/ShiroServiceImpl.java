@@ -1,5 +1,7 @@
 package com.zhaolearn.shirointegration4.service.impl;
 
+import com.zhaolearn.shirointegration4.common.JWTToken;
+import com.zhaolearn.shirointegration4.common.JWTUtil;
 import com.zhaolearn.shirointegration4.domain.Role;
 import com.zhaolearn.shirointegration4.domain.User;
 import com.zhaolearn.shirointegration4.repository.PermissionRepository;
@@ -51,25 +53,30 @@ public class ShiroServiceImpl implements ShiroService {
     }
 
     @Override
-    public void loginCheck(User user) throws Exception {
-        Subject subject = SecurityUtils.getSubject();//获取当前操作系统的用户
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassWord());//封装用户参数
-        token.setRememberMe(true);//是否记住用户，是true，否false（rememberMe只能记住你登录过，但不会记住你是谁以及你的权限信息。）
+    public String loginCheck(User user) throws Exception {
+        //获取当前操作系统的用户
+        Subject subject = SecurityUtils.getSubject();
+        String tokenStrinf=JWTUtil.sign(user.getUserName(), user.getPassWord());
+        //封装用户参数
+        JWTToken token = new JWTToken(tokenStrinf);
         try {
-            logger.info("test");
-            subject.login(token);//执行登录方法，如果没异常就是登录成功
-        } catch (UnknownAccountException uae) {
+            //执行登录方法，如果没异常就是登录成功
+            subject.login(token);
+            return tokenStrinf;
+        }catch (UnknownAccountException uae) {
             //账户不存在
-            throw new Exception("账户不存在");
+            throw new UnknownAccountException("账户不存在");
         } catch (IncorrectCredentialsException ice) {
             //密码不正确
-            throw new Exception("密码不正确");
+            throw new IncorrectCredentialsException("密码不正确");
         } catch (LockedAccountException lae) {
             //用户被锁定了
-            throw new Exception("用户被锁定了 ");
+            throw new LockedAccountException("用户被锁定了 ");
         } catch (AuthenticationException ae) {
             //无法判断是什么错
-            throw new Exception("未知错误");
+            throw new AuthenticationException("未知错误");
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 }

@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ShiroIntegration3Application {
+public class ShiroIntegration4Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(ShiroIntegration3Application.class, args);
+        SpringApplication.run(ShiroIntegration4Application.class, args);
     }
 
 }
