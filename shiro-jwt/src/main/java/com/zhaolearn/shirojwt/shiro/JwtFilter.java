@@ -59,8 +59,10 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         LOGGER.info("isAccessAllowed-----------");
+        //判断用户是否登入
         if (isLoginAttempt(request, response)) {
             try {
+                //进行认证token
                 executeLogin(request, response);
             } catch (Exception e) {
                 e.printStackTrace();
