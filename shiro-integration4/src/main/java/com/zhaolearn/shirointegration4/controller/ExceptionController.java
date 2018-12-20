@@ -12,28 +12,24 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class ExceptionController {
-
     // 捕捉shiro的异常
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ShiroException.class)
     public ResultDTO handle401(ShiroException e) {
-        return new ResultDTO(401, e.getMessage(), null);
+        return new ResultDTO(401, "请输入正确参数", null);
     }
-
     // 捕捉UnauthorizedException
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
     public ResultDTO handle401(Exception e) {
         return new ResultDTO(401, e.getMessage(), null);
     }
-
     // 捕捉其他所有异常
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResultDTO globalException(HttpServletRequest request, Throwable ex) {
         return new ResultDTO(getStatus(request).value(), ex.getMessage(), null);
     }
-
     private HttpStatus getStatus(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         if (statusCode == null) {
