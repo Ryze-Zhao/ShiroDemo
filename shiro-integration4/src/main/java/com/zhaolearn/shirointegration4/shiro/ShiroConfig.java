@@ -1,6 +1,8 @@
 package com.zhaolearn.shirointegration4.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
+import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -17,9 +19,15 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * @Info:Shiro的配置
+ * @author: HeHaoZhao
+ * @date: 2018/12/20 10:17
+ */
 @Configuration
 public class ShiroConfig {
     private final static Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
@@ -34,44 +42,63 @@ public class ShiroConfig {
         return filterRegistrationBean;
     }
 
-    //创建ShiroFilterFactoryBean
+
+    /**
+     * @param defaultWebSecurityManager
+     * @return: org.apache.shiro.spring.web.ShiroFilterFactoryBean
+     * @Info:创建ShiroFilterFactoryBean
+     * @author: HeHaoZhao
+     * @date: 2018/12/20 10:18
+     */
     @Bean("shiroFilterFactoryBean")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(
             @Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
-        logger.info("jinlaile");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
-        /*
-         * 4    Shiro内置过滤器，可以实现权限相关的拦截器，常用过滤器
-         * 4.1    anon：无需认证
-         * 4.2    authc：必须认证
-         * 4.3    user：如果使用rememberMe功能可以直接访问
-         * 4.4    perms[]：该资源必须有该权限才可以访问
-         * 4.5    roles[]：该资源必须有该角色才可以访问
-         */
-        Map<String, String> filterChainMap = new LinkedHashMap<>(); //为了保证有序采用Linked，key是拦截路径，value是过滤器
-        filterChainMap.put("/demo/index", "anon");
-        filterChainMap.put("/demo/tologin", "anon");
-        filterChainMap.put("/demo/login", "anon");
-        //      filterChainMap.put("/demo/add", "myRoleFilter[perm1,perm3]");
-        //    filterChainMap.put("/demo/update", "myRoleFilter[admin,test]");
-        //一个目录下可以使用这个，这个是controller路径
-        filterChainMap.put("/demo/*", "authc");
-        shiroFilterFactoryBean.setLoginUrl("/demo/tologin");//拦截后跳转到的页面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/demo/index");//未授权自动跳转到的页面
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainMap);
+        // 添加自己的过滤器并且取名为myFilter
+        Map<String, Filter> filterMap = new LinkedHashMap<>();
+        filterMap.put("myFilter", new MyFilter());
+        shiroFilterFactoryBean.setFilters(filterMap);
+        Map<String, String> filterRuleMap = new LinkedHashMap<>();
+        // 访问401和404页面不通过我们的Filter
+        filterRuleMap.put("/401", "anon");
+        // 所有请求通过我们自己的JWT Filter
+        filterRuleMap.put("/**", "myFilter");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/401");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return shiroFilterFactoryBean;
     }
 
-    //创建DefaultWebSecurityManager
+    /**
+     * @param userRealm
+     * @return: org.apache.shiro.web.mgt.DefaultWebSecurityManager
+     * @Info:创建DefaultWebSecurityManager
+     * @author: HeHaoZhao
+     * @date: 2018/12/20 10:18
+     */
     @Bean("defaultWebSecurityManager")
     public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(userRealm);
+        /*
+         * 关闭shiro自带的session，详情见文档
+         * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
+         */
+        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
+        DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
+        defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
+        subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
+        defaultWebSecurityManager.setSubjectDAO(subjectDAO);
         return defaultWebSecurityManager;
     }
 
-    //创建Realm,返回的值放入Spring
+    /**
+     * @param
+     * @return: com.zhaolearn.shirointegration4.shiro.UserRealm
+     * @Info:创建Realm,返回的值放入Spring
+     * @author: HeHaoZhao
+     * @date: 2018/12/20 10:18
+     */
     @Bean("userRealm")
     public UserRealm getRealm() {
         return new UserRealm();
