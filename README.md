@@ -2,6 +2,8 @@
 
 #### 项目介绍
 主要是学习Shiro
+以下是学习汇总文章
+http://www.hehaozhao.xin/front/articlePage/yksnv5my2f
 #### 软件架构
 软件架构说明
 
