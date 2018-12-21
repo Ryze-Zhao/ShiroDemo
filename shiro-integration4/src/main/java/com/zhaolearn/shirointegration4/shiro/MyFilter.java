@@ -71,6 +71,7 @@ public class MyFilter extends BasicHttpAuthenticationFilter {
      * 判断用户是否已经登入。
      * 检测header里面是否包含Authorization字段即可，Authorization就是需要传入的token
      */
+    @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
         LOGGER.info("isLoginAttempt-----------");
         HttpServletRequest req = (HttpServletRequest) request;
@@ -81,6 +82,7 @@ public class MyFilter extends BasicHttpAuthenticationFilter {
     /**
      * 对已经传入token的用户进行验证Authorization就是需要传入的token
      */
+    @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
         LOGGER.info("executeLogin-----------");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
