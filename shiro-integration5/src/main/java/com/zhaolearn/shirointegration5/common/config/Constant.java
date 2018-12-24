@@ -56,6 +56,6 @@ public class Constant {
     /**
      * redis-key-前缀-shiro:cache:
      */
-    public final static String PREFIX_SHIRO_CACHE = "shrio:cache:";
+    public final static String PREFIX_SHIRO_CACHE = "shiro:cache:";
 
 }
