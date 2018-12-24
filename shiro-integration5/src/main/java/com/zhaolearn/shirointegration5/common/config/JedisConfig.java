@@ -49,9 +49,8 @@ public class JedisConfig {
             jedisPoolConfig.setMaxWaitMillis(maxWait);
             jedisPoolConfig.setMaxTotal(maxActive);
             jedisPoolConfig.setMinIdle(minIdle);
-            // JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password);
             JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout,password);
-            logger.info(jedisPool.getResource().set("1","2"));
+            //logger.info(jedisPool.getResource().set("1","2"));
             logger.info("初始化Redis连接池JedisPool成功!" + " Redis地址: " + host + ":" + port+this.toString());
             return jedisPool;
         } catch (Exception e) {

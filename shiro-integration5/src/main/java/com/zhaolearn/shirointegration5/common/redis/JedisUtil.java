@@ -3,8 +3,8 @@ package com.zhaolearn.shirointegration5.common.redis;
 
 import com.zhaolearn.shirointegration5.common.exception.MyException;
 import com.zhaolearn.shirointegration5.common.utils.Constant;
+import com.zhaolearn.shirointegration5.common.utils.MyStringUtils;
 import com.zhaolearn.shirointegration5.common.utils.SerializableUtil;
-import com.zhaolearn.shirointegration5.common.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -80,7 +80,7 @@ public class JedisUtil {
         try {
             jedis = jedisPool.getResource();
             byte[] bytes = jedis.get(key.getBytes());
-            if(StringUtil.isNotNull(bytes)) {
+            if(MyStringUtils.isNotNull(bytes)) {
                 return SerializableUtil.unserializable(bytes);
             }
         } catch (Exception e) {
