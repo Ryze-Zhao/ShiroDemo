@@ -1,6 +1,7 @@
 package com.zhaolearn.shirointegration5.controller;
 
-import com.zhaolearn.shirointegration5.common.ResultDTO;
+
+import com.zhaolearn.shirointegration5.common.dto.ResultDTO;
 import com.zhaolearn.shirointegration5.domain.User;
 import com.zhaolearn.shirointegration5.service.ShiroService;
 import org.apache.shiro.SecurityUtils;

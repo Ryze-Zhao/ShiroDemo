@@ -1,7 +1,7 @@
 package com.zhaolearn.shirointegration5.service.impl;
 
-import com.zhaolearn.shirointegration5.common.JWTToken;
-import com.zhaolearn.shirointegration5.common.JWTUtil;
+import com.zhaolearn.shirointegration5.common.jwt.JWTToken;
+import com.zhaolearn.shirointegration5.common.jwt.JWTUtil;
 import com.zhaolearn.shirointegration5.domain.Role;
 import com.zhaolearn.shirointegration5.domain.User;
 import com.zhaolearn.shirointegration5.repository.PermissionRepository;

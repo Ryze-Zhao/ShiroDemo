@@ -1,9 +1,9 @@
 package com.zhaolearn.shirointegration5.common.shiro;
 
-import com.zhaolearn.shirojwtredis.common.JWTToken;
-import com.zhaolearn.shirojwtredis.common.JWTUtil;
-import com.zhaolearn.shirojwtredis.domain.User;
-import com.zhaolearn.shirojwtredis.service.ShiroService;
+import com.zhaolearn.shirointegration5.common.jwt.JWTToken;
+import com.zhaolearn.shirointegration5.common.jwt.JWTUtil;
+import com.zhaolearn.shirointegration5.domain.User;
+import com.zhaolearn.shirointegration5.service.ShiroService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

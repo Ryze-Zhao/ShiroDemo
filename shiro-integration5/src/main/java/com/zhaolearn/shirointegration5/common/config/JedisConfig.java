@@ -13,7 +13,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 @EnableAutoConfiguration
-@PropertySource("classpath:config/redis-config.yaml")
+@PropertySource("classpath:application-dev.yaml")
 @ConfigurationProperties(prefix = "redis")
 public class JedisConfig {
 
