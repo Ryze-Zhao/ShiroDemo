@@ -18,3 +18,18 @@ spring:
     #自动生成表和自动更新字段
     hibernate:
       ddl-auto: update
+  cache:
+    redis:
+      time-to-live: 60s
+    type: redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000
+    jedis:
+      pool:
+        max-idle: 10
+        max-active: 10
+        min-idle: 5
+        max-wait: 10000
+    database: 0
