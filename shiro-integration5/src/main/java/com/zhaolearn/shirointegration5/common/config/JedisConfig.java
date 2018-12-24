@@ -23,8 +23,11 @@ public class JedisConfig {
     @Value("${spring.redis.port}")
     private int port;
 
+    /**
+     * 需要密码的时候再启用获取密码
+     * @Value("${spring.redis.password}")
+     */
     private String password;
-
 
     @Value("${spring.redis.timeout}")
     private int timeout;

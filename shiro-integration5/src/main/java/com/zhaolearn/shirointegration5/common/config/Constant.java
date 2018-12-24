@@ -53,13 +53,9 @@ public class Constant {
      */
     public final static int EXRP_MS_DAY = 60 * 60 * 24*1000;
 
-
     /**
      * redis-key-前缀-shiro:cache:
      */
     public final static String PREFIX_SHIRO_CACHE = "shrio:cache:";
-
-
-
 
 }

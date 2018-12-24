@@ -46,7 +46,7 @@ public class MyCache<K,V> implements Cache<K,V> {
         // 读取配置文件，获取Redis的Shiro缓存过期时间
        /* PropertiesUtil.readProperties("config.properties");
         String shiroCacheExpireTime = PropertiesUtil.getProperty("shiroCacheExpireTime");*/
-        String shiroCacheExpireTime=30*60*1000+"";
+        String shiroCacheExpireTime=Constant.EXRP_S_HALFHOUR+"";
         // 设置Redis的Shiro缓存
         return JedisUtil.setObject(this.getKey(key), value, Integer.parseInt(shiroCacheExpireTime));
     }
