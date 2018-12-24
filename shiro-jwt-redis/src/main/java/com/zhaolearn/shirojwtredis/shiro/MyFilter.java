@@ -1,10 +1,7 @@
 package com.zhaolearn.shirojwtredis.shiro;
 
 import com.zhaolearn.shirojwtredis.common.JWTToken;
-import com.zhaolearn.shirojwtredis.common.ResultDTO;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
-import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,8 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import com.alibaba.fastjson.JSONObject;
+
 /**
  * @Info:除了例外的URL，其他全部都要进入这个拦截器
  * @author: HeHaoZhao
@@ -63,8 +59,7 @@ public class MyFilter extends BasicHttpAuthenticationFilter {
                 executeLogin(request, response);
             } catch (Exception e) {
                 //认证失败就跳转到该方法指定的url
-                response401(request, response,e.getMessage());
-                return false;
+                response401(request, response);
             }
         }
         return true;
@@ -74,6 +69,7 @@ public class MyFilter extends BasicHttpAuthenticationFilter {
      * 判断用户是否已经登入。
      * 检测header里面是否包含Authorization字段即可，Authorization就是需要传入的token
      */
+    @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
         LOGGER.info("isLoginAttempt-----------");
         HttpServletRequest req = (HttpServletRequest) request;
@@ -84,6 +80,7 @@ public class MyFilter extends BasicHttpAuthenticationFilter {
     /**
      * 对已经传入token的用户进行验证Authorization就是需要传入的token
      */
+    @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
         LOGGER.info("executeLogin-----------");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
@@ -98,23 +95,13 @@ public class MyFilter extends BasicHttpAuthenticationFilter {
     /**
      * 将非法请求跳转到 /401
      */
-    private void response401(ServletRequest req, ServletResponse resp, String msg) {
+    private void response401(ServletRequest req, ServletResponse resp) {
         LOGGER.info("response401-----------");
-        HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
-        httpServletResponse.setStatus(401);
-        httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.setContentType("application/json; charset=utf-8");
-        PrintWriter out = null;
         try {
-            out = httpServletResponse.getWriter();
-            String data = JSONObject.toJSONString((new ResultDTO(401, "无权访问(Unauthorized):" + msg, null)));
-            out.append(data);
+            HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
+            httpServletResponse.sendRedirect("/401");
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
-        } finally {
-            if (out != null) {
-                out.close();
-            }
         }
     }
 }

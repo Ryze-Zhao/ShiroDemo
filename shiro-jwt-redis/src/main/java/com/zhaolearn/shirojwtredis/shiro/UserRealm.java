@@ -1,17 +1,14 @@
 package com.zhaolearn.shirojwtredis.shiro;
 
-import com.auth0.jwt.JWT;
 import com.zhaolearn.shirojwtredis.common.JWTToken;
 import com.zhaolearn.shirojwtredis.common.JWTUtil;
 import com.zhaolearn.shirojwtredis.domain.User;
 import com.zhaolearn.shirojwtredis.service.ShiroService;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -74,12 +71,13 @@ public class UserRealm extends AuthorizingRealm {
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtil.getUserName(token);
         User user = shiroService.findByUserName(username);
+
         if (user == null) {
             //shiro底层会抛出UnknownAccountException，表示不存在用户
             return null;
         }
         //用于其他位置的验证
-        if(!JWTUtil.verify(token,user.getUserName(),user.getPassWord())){
+        if(!JWTUtil.verify(token,user.getUserName(),user.getPassWord())) {
             throw new IncorrectCredentialsException("Toekn不正确");
         }
         return new SimpleAuthenticationInfo(token, token, getClass().getName());
