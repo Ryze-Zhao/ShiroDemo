@@ -1,4 +1,4 @@
-# SpringBoot2.1.1+Shiro1.4.0+JPA+Thymeleaf+JWT3.4.0等学习
+# SpringBoot2.1.1+Shiro1.4.0+JPA+Thymeleaf+JWT3.4.0+Redis等学习
 
 #### 项目介绍
 主要是学习Shiro
@@ -34,13 +34,18 @@ Shiro父模块
     Shiro：整合演示使用注解进行多角色多权限授权
     
 6. shiro-integration4
+    Shiro：整合JWT进行鉴权，完全实现无状态鉴权
     基于shiro-integration3代码一步步结合jwt
     
 7. shiro-jwt
     学习结合jwt
 
+8. shiro-jwt-redis
+    学习结合redis
 
-
+9. shiro-integration5
+    
+    基于shiro-integration4代码一步步使shiro+jwt结合redis
 
 
 
