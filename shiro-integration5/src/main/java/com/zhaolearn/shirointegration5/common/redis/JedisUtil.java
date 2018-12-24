@@ -2,7 +2,7 @@ package com.zhaolearn.shirointegration5.common.redis;
 
 
 import com.zhaolearn.shirointegration5.common.exception.MyException;
-import com.zhaolearn.shirointegration5.common.utils.Constant;
+import com.zhaolearn.shirointegration5.common.config.Constant;
 import com.zhaolearn.shirointegration5.common.utils.MyStringUtils;
 import com.zhaolearn.shirointegration5.common.utils.SerializableUtil;
 import org.springframework.beans.factory.annotation.Autowired;

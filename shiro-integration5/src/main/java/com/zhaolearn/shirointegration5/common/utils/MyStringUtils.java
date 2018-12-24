@@ -8,19 +8,18 @@ public class MyStringUtils extends org.apache.commons.lang3.StringUtils {
 
 
      /**
-      * Byte数组为空判断
+      * Byte数组为空判断,参考isEmpty(可变数组)
       * @param bytes
       * @return: boolean
       * @author: HeHaoZhao
       * @date: 2018/12/24 11:46
       */
     public static boolean isNull(byte[] bytes){
-        // 根据byte数组长度为0判断
         return bytes.length == 0 || bytes == null;
     }
 
     /**
-     * Byte数组不为空判断
+     * Byte数组不为空判断,参考isNotEmpty(可变数组)
      * @param bytes
      * @return: boolean
      * @author: HeHaoZhao

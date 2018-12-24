@@ -5,16 +5,20 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.zhaolearn.shirointegration5.common.config.Constant;
 
 import java.util.Date;
 
 public class JWTUtil {
-    // 过期时间30分钟
-    private static final long EXPIRE_TIME = 30*60*1000;
-    // 密钥名字
-    private static final String CLAIM="RYZEZHAO";
-    // 算法的盐
-    private static final String SALT="RYZEZHAO";
+    /**
+     * JWT-密钥名字
+     */
+    private static final String JWT_CLAIM="RYZEZHAO";
+    /**
+     * JWT-算法的盐
+     */
+    private static final String JWT_SALT="RYZEZHAO";
+
     /**
      * 校验token是否正确
      * @param token 密钥
@@ -23,8 +27,8 @@ public class JWTUtil {
      */
     public static boolean verify(String token, String userName, String passWord) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(SALT+passWord);
-            JWTVerifier verifier = JWT.require(algorithm).withClaim(CLAIM, userName).build();
+            Algorithm algorithm = Algorithm.HMAC256(JWT_SALT+passWord);
+            JWTVerifier verifier = JWT.require(algorithm).withClaim(JWT_CLAIM, userName).build();
             DecodedJWT jwt = verifier.verify(token);
             return true;
         } catch (Exception exception) {
@@ -38,7 +42,7 @@ public class JWTUtil {
     public static String getUserName(String token) {
         try {
             DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim(CLAIM).asString();
+            return jwt.getClaim(JWT_CLAIM).asString();
         } catch (JWTDecodeException e) {
             return null;
         }
@@ -50,10 +54,11 @@ public class JWTUtil {
      * @return 加密的token
      */
     public static String sign(String userName, String passWord) {
+        // 过期时间30分钟
         try {
-            Date date = new Date(System.currentTimeMillis()+EXPIRE_TIME);
-            Algorithm algorithm = Algorithm.HMAC256(SALT+passWord);
-            return JWT.create().withClaim(CLAIM, userName).withExpiresAt(date).sign(algorithm);
+            Date date = new Date(System.currentTimeMillis()+ Constant.EXRP_MS_HALFHOUR);
+            Algorithm algorithm = Algorithm.HMAC256(JWT_SALT+passWord);
+            return JWT.create().withClaim(JWT_CLAIM, userName).withExpiresAt(date).sign(algorithm);
         } catch (Exception e) {
             return null;
         }

@@ -2,7 +2,7 @@ package com.zhaolearn.shirointegration5.common.shiro;
 
 import com.zhaolearn.shirointegration5.common.jwt.JWTUtil;
 import com.zhaolearn.shirointegration5.common.redis.JedisUtil;
-import com.zhaolearn.shirointegration5.common.utils.Constant;
+import com.zhaolearn.shirointegration5.common.config.Constant;
 import com.zhaolearn.shirointegration5.common.utils.SerializableUtil;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
