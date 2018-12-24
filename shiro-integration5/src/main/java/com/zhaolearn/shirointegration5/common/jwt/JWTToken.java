@@ -1,4 +1,4 @@
-package com.zhaolearn.shirointegration5.common;
+package com.zhaolearn.shirointegration5.common.jwt;
 
 import org.apache.shiro.authc.AuthenticationToken;
 

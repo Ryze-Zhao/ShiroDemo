@@ -1,6 +1,9 @@
-package com.zhaolearn.shirointegration5.shiro;
+package com.zhaolearn.shirointegration5.common.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import com.zhaolearn.shirointegration5.common.shiro.MyCacheManager;
+import com.zhaolearn.shirointegration5.common.shiro.MyFilter;
+import com.zhaolearn.shirointegration5.common.shiro.UserRealm;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -9,17 +12,13 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -80,21 +79,20 @@ public class ShiroConfig {
     public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(userRealm);
-        /*
-         * 关闭shiro自带的session，详情见文档
-         * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
-         */
+        // 关闭Shiro自带的session
         DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
         DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
         defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
         subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
         defaultWebSecurityManager.setSubjectDAO(subjectDAO);
+        // 设置自定义缓存(Cache)管理器
+        defaultWebSecurityManager.setCacheManager(new MyCacheManager());
         return defaultWebSecurityManager;
     }
 
     /**
      * @param
-     * @return: com.zhaolearn.shirointegration5.shiro.UserRealm
+     * @return: com.zhaolearn.shirojwtredis.shiro.UserRealm
      * @Info:创建Realm,返回的值放入Spring
      * @author: HeHaoZhao
      * @date: 2018/12/20 10:18

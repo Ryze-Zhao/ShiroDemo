@@ -1,4 +1,4 @@
-package com.zhaolearn.shirointegration5.common;
+package com.zhaolearn.shirointegration5.common.dto;
 
 public class ResultDTO {
     // http 状态码

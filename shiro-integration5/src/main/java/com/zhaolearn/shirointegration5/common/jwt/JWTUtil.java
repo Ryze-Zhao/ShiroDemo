@@ -1,4 +1,4 @@
-package com.zhaolearn.shirointegration5.common;
+package com.zhaolearn.shirointegration5.common.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

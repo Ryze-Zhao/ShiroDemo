@@ -1,9 +1,7 @@
-package com.zhaolearn.shirointegration5.shiro;
+package com.zhaolearn.shirointegration5.common.shiro;
 
-import com.zhaolearn.shirointegration5.common.JWTToken;
-import org.apache.shiro.subject.Subject;
+import com.zhaolearn.shirointegration5.common.jwt.JWTToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
-import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
