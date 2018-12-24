@@ -12,6 +12,7 @@
         <module>shiro-integration2</module>
         <module>shiro-integration3</module>
         <module>shiro-integration4</module>
+        <module>shiro-integration5</module>
         <module>shiro-jwt-redis</module>
         <module>shiro-demo2</module>
         <module>shiro-study1</module>
