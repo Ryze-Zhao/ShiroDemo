@@ -3,7 +3,7 @@
 #### 项目介绍
 主要是学习Shiro
 以下是学习汇总文章
-http://www.hehaozhao.xin/front/articlePage/yksnv5my2f
+https://www.hehaozhao.top/front/articlePage/yksnv5my2f
 #### 软件架构
 软件架构说明
 
@@ -54,8 +54,5 @@ Shiro父模块
 
 
 #### 参与贡献
-
 1. RyzeZhao
 
-#### 设计模式博客汇总
-https://www.hehaozhao.top/front/articlePage/4qq4td52t9
